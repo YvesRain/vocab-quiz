@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基础英语4 · 词汇测试</title>
+<style>
+:root {
+  --bg: #f0f2f5;
+  --card: #fff;
+  --primary: #003366;
+  --accent: #006644;
+  --danger: #c0392b;
+  --success: #27ae60;
+  --warn: #e67e22;
+  --text: #2c3e50;
+  --muted: #95a5a6;
+  --border: #e0e4e8;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+/* Header */
+.header { text-align: center; padding: 32px 20px 20px; }
+.header h1 { font-size: 1.8rem; color: var(--primary); margin-bottom: 4px; }
+.header .subtitle { color: var(--muted); font-size: 0.9rem; }
+
+/* Card */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; margin-bottom: 16px; }
+
+/* Screen visibility */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Home Screen */
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.mode-card { border: 2px solid var(--border); border-radius: var(--radius); padding: 16px; cursor: pointer; text-align: center; transition: all 0.2s; }
+.mode-card:hover { border-color: var(--accent); background: #f0faf5; }
+.mode-card.selected { border-color: var(--accent); background: #e8f5ee; }
+.mode-card .icon { font-size: 1.8rem; margin-bottom: 6px; }
+.mode-card .label { font-weight: 600; font-size: 0.95rem; }
+.mode-card .desc { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+.unit-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.unit-tag { padding: 8px 14px; border: 2px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; user-select: none; }
+.unit-tag:hover { border-color: var(--primary); }
+.unit-tag.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.range-group { display: flex; align-items: center; gap: 10px; margin: 12px 0; flex-wrap: wrap; }
+.range-group label { font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+.range-group input[type=range] { flex: 1; min-width: 120px; }
+.range-group .range-val { font-weight: 700; color: var(--primary); min-width: 40px; text-align: center; }
+
+.btn { display: inline-block; padding: 12px 32px; border: none; border-radius: 24px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: #004080; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,51,102,0.3); }
+.btn-outline { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+.btn-outline:hover { background: #f0f4f8; }
+.btn-danger { background: #fff; color: var(--danger); border: 2px solid var(--danger); }
+.btn-danger:hover { background: #fef0f0; }
+.btn-sm { padding: 6px 16px; font-size: 0.82rem; border-radius: 16px; }
+.btn-block { display: block; width: 100%; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Quiz Screen */
+.quiz-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.quiz-progress { font-weight: 600; color: var(--muted); font-size: 0.9rem; }
+.quiz-timer { font-weight: 700; color: var(--warn); font-size: 0.95rem; }
+.quiz-timer.warning { animation: pulse 0.8s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+
+.definition-box { background: #f8fafc; border-left: 4px solid var(--accent); padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 24px; }
+.definition-box .tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.75rem; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px; }
+.definition-box .def-text { font-size: 1.1rem; line-height: 1.7; color: var(--text); }
+
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option { padding: 14px 18px; border: 2px solid var(--border); border-radius: var(--radius); cursor: pointer; font-size: 1rem; font-weight: 500; transition: all 0.15s; display: flex; align-items: center; gap: 12px; }
+.option:hover { border-color: var(--primary); background: #f8faff; }
+.option.selected { border-color: var(--primary); background: #eef3ff; }
+.option.correct { border-color: var(--success); background: #e8f8ef; }
+.option.wrong { border-color: var(--danger); background: #fef0f0; }
+.option .letter { width: 32px; height: 32px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--muted); flex-shrink: 0; }
+.option.selected .letter { background: var(--primary); color: #fff; }
+.option.correct .letter { background: var(--success); color: #fff; }
+.option.wrong .letter { background: var(--danger); color: #fff; }
+
+.feedback { margin-top: 16px; padding: 14px 18px; border-radius: var(--radius); font-weight: 600; font-size: 0.95rem; display: none; }
+.feedback.show { display: block; }
+.feedback.correct { background: #e8f8ef; color: var(--success); border: 1px solid #a3e4bc; }
+.feedback.wrong { background: #fef0f0; color: var(--danger); border: 1px solid #f5c6cb; }
+
+/* Results Screen */
+.result-summary { text-align: center; padding: 20px 0; }
+.score-circle { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 6px solid; }
+.score-circle .pct { font-size: 2.2rem; font-weight: 800; }
+.score-circle .label { font-size: 0.8rem; color: var(--muted); }
+.score-circle.excellent { border-color: var(--success); color: var(--success); }
+.score-circle.good { border-color: var(--accent); color: var(--accent); }
+.score-circle.fair { border-color: var(--warn); color: var(--warn); }
+.score-circle.poor { border-color: var(--danger); color: var(--danger); }
+
+.result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.stat-card { text-align: center; padding: 14px; background: var(--bg); border-radius: var(--radius); }
+.stat-card .num { font-size: 1.6rem; font-weight: 800; }
+.stat-card .lbl { font-size: 0.78rem; color: var(--muted); }
+.stat-card .num.green { color: var(--success); }
+.stat-card .num.red { color: var(--danger); }
+.stat-card .num.orange { color: var(--warn); }
+
+.high-error-section { margin-top: 16px; }
+.high-error-section h3 { font-size: 1.1rem; color: var(--danger); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+
+.error-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.error-table th { background: #fef0f0; color: var(--danger); padding: 10px 12px; text-align: left; font-size: 0.8rem; text-transform: uppercase; }
+.error-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.error-table .word-col { font-weight: 600; color: var(--primary); }
+.error-table .rate-col { font-weight: 700; }
+.error-table .rate-col.high { color: var(--danger); }
+.error-table .rate-col.mid { color: var(--warn); }
+
+.review-list { max-height: 500px; overflow-y: auto; }
+.review-item { padding: 14px; border-bottom: 1px solid var(--border); }
+.review-item .q-word { font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+.review-item .q-def { color: var(--text); margin: 4px 0; font-size: 0.92rem; line-height: 1.5; }
+.review-item .q-meta { font-size: 0.8rem; color: var(--muted); }
+.review-item.was-wrong { border-left: 3px solid var(--danger); }
+.review-item.was-correct { border-left: 3px solid var(--success); }
+
+/* Charts */
+.chart-bar-wrap { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.chart-bar-label { width: 60px; font-size: 0.8rem; font-weight: 600; text-align: right; }
+.chart-bar-track { flex: 1; height: 22px; background: var(--bg); border-radius: 11px; overflow: hidden; }
+.chart-bar-fill { height: 100%; border-radius: 11px; transition: width 0.5s; min-width: 2px; display: flex; align-items: center; padding-left: 8px; font-size: 0.72rem; color: #fff; font-weight: 600; }
+
+/* Word Bank */
+.word-bank-search { width: 100%; padding: 10px 16px; border: 2px solid var(--border); border-radius: 24px; font-size: 0.95rem; outline: none; margin-bottom: 12px; }
+.word-bank-search:focus { border-color: var(--primary); }
+
+.wb-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.wb-table th { background: var(--bg); padding: 10px; text-align: left; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; }
+.wb-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.wb-table .wb-word { font-weight: 600; color: var(--primary); cursor: pointer; }
+.wb-table .wb-word:hover { text-decoration: underline; }
+.wb-table .wb-err { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; }
+.wb-table .wb-err.high { background: #fef0f0; color: var(--danger); }
+.wb-table .wb-err.mid { background: #fef5e7; color: var(--warn); }
+.wb-table .wb-err.low { background: #e8f8ef; color: var(--success); }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--bg); border-radius: 24px; padding: 4px; }
+.tab { flex: 1; padding: 10px 16px; border: none; background: transparent; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; color: var(--muted); transition: all 0.2s; }
+.tab.active { background: var(--card); color: var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+/* History */
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+.history-item .h-score { font-weight: 700; }
+.history-item .h-date { color: var(--muted); font-size: 0.8rem; }
+
+/* Toast */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 10px 24px; border-radius: 20px; font-size: 0.9rem; z-index: 999; animation: fadeInOut 2s forwards; }
+@keyframes fadeInOut { 0% { opacity:0; top:0; } 15% { opacity:1; top:20px; } 75% { opacity:1; top:20px; } 100% { opacity:0; top:0; } }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .mode-grid { grid-template-columns: 1fr; }
+  .result-stats { grid-template-columns: repeat(3, 1fr); }
+  .header h1 { font-size: 1.4rem; }
+  .card { padding: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+
+<script>
+// ==================== DATA ====================
+const VOCAB = [
+  // Unit 1 - Never Give In, Never, Never, Never (23 words)
+  {u:1,w:"catastrophic",p:"/kætə'strɒfɪk/",d:"involving or causing sudden great damage or suffering",c:"灾难性的；造成巨大损失或痛苦的"},
+  {u:1,w:"compliment",p:"/'kɒmplɪment/",d:"politely congratulate or praise sb. for sth.",c:"赞美；恭维"},
+  {u:1,w:"conviction",p:"/kən'vɪkʃən/",d:"a strong opinion or belief",c:"坚定的信念或观点"},
+  {u:1,w:"deceptive",p:"/dɪ'septɪv/",d:"giving an appearance or impression different from the true one",c:"欺骗性的；给人错误印象的"},
+  {u:1,w:"desperately",p:"/'despərətlɪ/",d:"(of a situation) extremely or dangerously",c:"极度地；危险地"},
+  {u:1,w:"far-reaching",p:"/fɑː'rɪtʃɪŋ/",d:"having a great influence or effect",c:"影响深远的"},
+  {u:1,w:"flinch",p:"/flɪntʃ/",d:"avoid doing or becoming involved in sth. through fear or anxiety",c:"退缩；畏缩"},
+  {u:1,w:"impostor",p:"/ɪm'pɒstə/",d:"one who deceives under the assumed identity",c:"冒名顶替者；骗子"},
+  {u:1,w:"liquidate",p:"/'lɪkwɪdeɪt/",d:"put an end to; abolish or kill",c:"清算；消灭；扼杀"},
+  {u:1,w:"lull",p:"/lʌl/",d:"a temporary interval of quiet or lack of activity",c:"暂时的平静或间歇"},
+  {u:1,w:"menace",p:"/'menəs/",d:"a person or thing that is likely to cause harm; a threat or danger",c:"威胁；危险的人或事物"},
+  {u:1,w:"might",p:"/maɪt/",d:"great strength and power",c:"强大的力量；威力"},
+  {u:1,w:"misfortune",p:"/mɪs'fɔːtʃən/",d:"an unfortunate condition or event",c:"不幸；厄运"},
+  {u:1,w:"overwhelming",p:"/əʊvə'welmɪŋ/",d:"very great in amount",c:"压倒性的；巨大的"},
+  {u:1,w:"persevere",p:"/pɜːsɪ'viə/",d:"continue in a course of action even in the face of difficulty",c:"坚持不懈；锲而不舍"},
+  {u:1,w:"petty",p:"/'petɪ/",d:"of little importance",c:"微不足道的；琐碎的"},
+  {u:1,w:"slate",p:"/sleɪt/",d:"a fine-grained gray or green rock easily split into smooth, flat plates",c:"板岩；石板"},
+  {u:1,w:"sponge",p:"/spʌndʒ/",d:"a gauze pad used to absorb blood and other liquids, as in surgery",c:"（外科用的）纱布垫"},
+  {u:1,w:"station",p:"/'steɪʃən/",d:"social rank or position",c:"社会地位；身份"},
+  {u:1,w:"stern",p:"/stɜːn/",d:"(of competition or opposition) putting sb. or sth. under extreme pressure",c:"严峻的；苛刻的"},
+  {u:1,w:"triumph",p:"/'traɪəmf/",d:"a great victory or achievement",c:"伟大的胜利或成就"},
+  {u:1,w:"unmeasured",p:"/ʌn'meʒəd/",d:"immense; incalculable",c:"不可估量的；无限的"},
+  {u:1,w:"venture",p:"/'ventʃə/",d:"dare to do or say sth. that may be considered daring",c:"敢于（说或做）；冒险"},
+
+  // Unit 2 - The Information Age (24 words)
+  {u:2,w:"access",p:"/'ækses/",d:"means or right of using, reaching or entering",c:"使用权；进入/到达的权利或途径"},
+  {u:2,w:"addicted",p:"/ə'dɪktɪd/",d:"being dependent on sth. and wanting to spend as much time doing it as possible",c:"上瘾的；沉迷的"},
+  {u:2,w:"alcoholic",p:"/ælkə'hɒlɪk/",d:"sb. who cannot stop drinking large amounts of alcohol, even when this is making him or her ill",c:"酗酒者；酒精依赖者"},
+  {u:2,w:"alienate",p:"/'eɪljəneɪt/",d:"cause sb. to feel very distant from or not welcome to sb. else",c:"使疏远；使感到不受欢迎"},
+  {u:2,w:"alienation",p:"/eɪljə'neɪʃən/",d:"causing sb. to feel very distant or not welcome to sb. else",c:"疏远；疏离感"},
+  {u:2,w:"binge",p:"/bɪndʒ/",d:"an occasion when an activity is done in an extreme way, esp. eating, drinking or spending money",c:"放纵；无节制的行为"},
+  {u:2,w:"converse",p:"/'kɒnvɜːs/",d:"the opposite",c:"相反；反面"},
+  {u:2,w:"cyberspace",p:"/'saibəspeɪs/",d:"data banks and networks in computer technology considered as a space",c:"网络空间"},
+  {u:2,w:"depressed",p:"/dɪ'prest/",d:"low in spirits",c:"沮丧的；情绪低落的"},
+  {u:2,w:"dramatically",p:"/drə'mætɪkəli/",d:"suddenly and noticeably",c:"显著地；突然地"},
+  {u:2,w:"exaggeration",p:"/ɪɡzædʒə'reɪʃən/",d:"action of making a situation, quality or feature appear greater, more obvious or more important than it really is",c:"夸张；夸大"},
+  {u:2,w:"forum",p:"/'fɔːrəm/",d:"a place or an occasion for talking about a problem or matter, esp. of public interest",c:"论坛；讨论场所"},
+  {u:2,w:"foster",p:"/'fɒstə/",d:"help to develop",c:"促进；培养"},
+  {u:2,w:"fragmentation",p:"/frægmen'teɪʃən/",d:"breaking sth. into small pieces",c:"碎片化；分裂"},
+  {u:2,w:"globalization",p:"/gləʊbəlaɪ'zeɪʃən/",d:"the state of developing or being developed so as to make possible international influence or operation",c:"全球化"},
+  {u:2,w:"gratification",p:"/grætɪfɪ'keɪʃən/",d:"satisfaction; pleasure",c:"满足；快感"},
+  {u:2,w:"modal",p:"/'məʊdəl/",d:"of or for the mode",c:"模式的；形式的"},
+  {u:2,w:"moderate",p:"/'mɒdərət/",d:"neither small nor large but between the two; clearly within the limits of a range of possibilities",c:"适度的；温和的"},
+  {u:2,w:"oyster",p:"/'ɔɪstə/",d:"a world in which sb. can do anything or go anywhere that he or she wants to",c:"可以随心所欲的世界"},
+  {u:2,w:"perceive",p:"/pə'siːv/",d:"see, notice or realize sth., esp. when it is not obvious",c:"察觉；认识到"},
+  {u:2,w:"potential",p:"/pə'tenʃəl/",d:"the ability to develop, achieve or succeed",c:"潜力；潜能"},
+  {u:2,w:"simulated",p:"/'sɪmjʊleɪtɪd/",d:"made to look, feel etc. like the real thing",c:"模拟的；仿真的"},
+  {u:2,w:"skew",p:"/skju:/",d:"cause sth. to be not straight or exact; twist or distort",c:"歪曲；扭曲"},
+  {u:2,w:"surf",p:"/sɜːf/",d:"look quickly through information on the Internet",c:"浏览（互联网信息）"},
+
+  // Unit 3 - The Shadows of the Mushroom-Shaped Cloud (16 words)
+  {u:3,w:"apprehend",p:"/æprɪ'hend/",d:"expect with anxiety, suspicion or fear",c:"担忧；忧虑地预期"},
+  {u:3,w:"artistry",p:"/'ɑːtɪstri/",d:"skill in an artistic activity",c:"艺术技巧；艺术才能"},
+  {u:3,w:"char",p:"/tʃɑː/",d:"make or become black by burning",c:"烧焦；烧黑"},
+  {u:3,w:"constitute",p:"/'kɒnstɪtjuːt/",d:"be the components or essence of; make up; form",c:"构成；组成"},
+  {u:3,w:"continuation",p:"/kəntɪnju'eɪʃən/",d:"the act or an instance of continuing; the process of being continued",c:"持续；延续"},
+  {u:3,w:"counterpoise",p:"/'kaʊntəpɔɪz/",d:"counterbalance; keep equal",c:"平衡；使均衡"},
+  {u:3,w:"dispatch",p:"/dɪ'spætʃ/",d:"send off to a destination",c:"派遣；发送"},
+  {u:3,w:"intact",p:"/ɪn'tækt/",d:"entire; unimpaired",c:"完整无损的"},
+  {u:3,w:"ledge",p:"/ledʒ/",d:"a narrow horizontal surface projecting from a wall, etc.",c:"壁架；突出的窄平台"},
+  {u:3,w:"outskirts",p:"/'autskɜːts/",d:"(pl.) the outer border or fringe of a town",c:"市郊；边缘地带"},
+  {u:3,w:"peril",p:"/'perɪl/",d:"serious or immediate danger",c:"严重的危险"},
+  {u:3,w:"pulse",p:"/pʌls/",d:"a single vibration of sound, electric current, light, etc.",c:"脉冲；振动波"},
+  {u:3,w:"rubble",p:"/'rʌbl/",d:"waste or rough fragments of stone or brick, etc.",c:"碎石；瓦砾"},
+  {u:3,w:"stumble",p:"/'stʌmbl/",d:"walk or go unsteadily",c:"跌跌撞撞地走"},
+  {u:3,w:"unearthly",p:"/ʌn'ɜːθli/",d:"supernatural; mysterious",c:"超自然的；神秘的"},
+  {u:3,w:"wreckage",p:"/'rekɪdʒ/",d:"the remnants of a wreck",c:"残骸；残余物"},
+
+  // Unit 4 - The Fourth of July (30 words)
+  {u:4,w:"backdrop",p:"/'bækdrɒp/",d:"a painted cloth hung at the back of a theatre stage as part of the scenery",c:"背景幕布"},
+  {u:4,w:"barbecue",p:"/'ba:bɪkju:/",d:"a meal or party during which food is cooked on a metal frame over a fire and eaten outdoors",c:"烧烤野餐"},
+  {u:4,w:"bonnet",p:"/'bɒnɪt/",d:"a soft hat tied under the chin",c:"软帽（系在下巴下）"},
+  {u:4,w:"cliché",p:"/'kli:ʃeɪ/",d:"a very predictable or unoriginal thing",c:"陈词滥调；老套的东西"},
+  {u:4,w:"confront",p:"/kən'frʌnt/",d:"face up to and deal with (a problem or difficult situation)",c:"面对；正视（问题或困境）"},
+  {u:4,w:"enlightenment",p:"/ɪn'laɪtənmənt/",d:"the act of making sb. understand sth. or freeing them from false beliefs",c:"启迪；启蒙"},
+  {u:4,w:"expatriate",p:"/eks'pætriət/",d:"make sb. leave his or her country and live abroad",c:"使移居国外；使离开本国"},
+  {u:4,w:"fleeciness",p:"/'fli:sɪnɪs/",d:"the state of being soft and woolly",c:"柔软蓬松的状态"},
+  {u:4,w:"folly",p:"/'fɒlɪ/",d:"a foolish act, idea, or practice",c:"愚蠢的行为或想法"},
+  {u:4,w:"goggle-eyed",p:"/'gɒglaɪd/",d:"having staring or protruding eyes, esp. through astonishment",c:"瞪大眼睛的（尤指因惊讶）"},
+  {u:4,w:"heritage",p:"/'herɪtɪdʒ/",d:"cultural traditions that have been passed down from previous generations",c:"文化遗产；传统"},
+  {u:4,w:"immersed",p:"/ɪ'mɜːst/",d:"involving oneself deeply in a particular activity or interest",c:"沉浸的；专注的"},
+  {u:4,w:"jarring",p:"/'dʒɑːrɪŋ/",d:"improper or inappropriate in a striking or shocking way",c:"不协调的；刺耳的"},
+  {u:4,w:"lacuna",p:"/lə'kju:nə/",d:"(pl. lacunae /-niː/) an unfilled space or interval; a gap",c:"空白；空隙"},
+  {u:4,w:"launch",p:"/lɔːntʃ/",d:"set going; initiate",c:"发起；启动"},
+  {u:4,w:"make-believe",p:"/'meɪkbɪliːv/",d:"imitating sth. real; pretending",c:"假装的；虚构的"},
+  {u:4,w:"peer",p:"/pɪə/",d:"a person of the same age, status, or ability as another specified person",c:"同龄人；同辈"},
+  {u:4,w:"personify",p:"/pɜː'sɒnɪfaɪ/",d:"represent (a quality or concept) by a figure in human form",c:"拟人化；是……的化身"},
+  {u:4,w:"prompt",p:"/prɒmpt/",d:"cause or bring about (an action or feeling)",c:"引起；促使"},
+  {u:4,w:"pursue",p:"/pə'sjuː/",d:"continue to study, explore, or discuss (a topic, idea, or argument)",c:"继续探讨；追求"},
+  {u:4,w:"reenactment",p:"/riːɪ'næktmənt/",d:"the acting out of a past event",c:"重演；再现"},
+  {u:4,w:"regulation",p:"/reɡjʊ'leɪʃən/",d:"in accordance with laws or rules; correct",c:"符合规定的；正规的"},
+  {u:4,w:"resonate",p:"/'rezəneɪt/",d:"evoke or suggest images, memories, and emotions",c:"引起共鸣"},
+  {u:4,w:"riposte",p:"/rɪ'pɒst/",d:"make a quick clever reply to an insult or criticism",c:"机智地反驳"},
+  {u:4,w:"sinister",p:"/'sɪnɪstə/",d:"harmful or evil",c:"邪恶的；不祥的"},
+  {u:4,w:"skirmish",p:"/'skɜːmɪʃ/",d:"a short fight",c:"小规模战斗；小冲突"},
+  {u:4,w:"suppress",p:"/sə'pres/",d:"prevent the development, action, or expression of (a feeling, impulse, idea, etc.)",c:"压制；抑制"},
+  {u:4,w:"swell",p:"/swel/",d:"gradually increase",c:"逐渐增加"},
+  {u:4,w:"twinge",p:"/twɪndʒ/",d:"a brief experience of an emotion, typically an unpleasant one",c:"一阵（不愉快的）情感"},
+  {u:4,w:"unease",p:"/ʌn'iːz/",d:"anxiety or nervousness",c:"不安；担忧"},
+
+  // Unit 5 - The Monster (29 words)
+  {u:5,w:"agony",p:"/'ægənɪ/",d:"extreme physical or mental suffering",c:"极大的痛苦"},
+  {u:5,w:"arrogance",p:"/'ærəgəns/",d:"a feeling or an impression of superiority manifested in an overbearing manner",c:"傲慢；自负"},
+  {u:5,w:"benefactor",p:"/'benɪfæktə/",d:"a person who gives money or other help to another person or a cause",c:"捐助者；恩人"},
+  {u:5,w:"burlesque",p:"/bɜː'lesk/",d:"cause sb. or sth. to appear absurd by parodying or copying in a magnified form",c:"夸张地模仿以取笑"},
+  {u:5,w:"callous",p:"/'kæləs/",d:"showing or having an insensitive and cruel disregard for others",c:"冷漠无情的"},
+  {u:5,w:"caricature",p:"/'kærɪkətjuə/",d:"a picture, description, or imitation of a person in which certain striking characteristics are overstated in order to create a comic or grotesque effect",c:"夸张的漫画/描述"},
+  {u:5,w:"compromise",p:"/'kɒmprəmaɪz/",d:"weaken (a reputation or principle) by accepting standards that are lower than is desirable",c:"损害（声誉或原则）；妥协"},
+  {u:5,w:"conceit",p:"/kən'siːt/",d:"excessive pride in oneself",c:"自负；自高自大"},
+  {u:5,w:"conceive",p:"/kən'siːv/",d:"form or devise (a plan, idea, or work) in the mind",c:"构思；设想"},
+  {u:5,w:"conversationalist",p:"/kɒnvə'seɪʃənəlɪst/",d:"a person who is good at or fond of engaging in conversation",c:"善于交谈的人"},
+  {u:5,w:"delusion",p:"/dɪ'luːʒən/",d:"a false belief or opinion",c:"错觉；妄想"},
+  {u:5,w:"demon",p:"/'di:mən/",d:"a forceful, fierce, or skilful performer of a specified activity; an evil spirit or force",c:"精力过人者；恶魔"},
+  {u:5,w:"downright",p:"/'daunrait/",d:"to an extreme degree; thoroughly",c:"彻底地；完全地"},
+  {u:5,w:"exhausting",p:"/ɪɡ'zɔːstɪŋ/",d:"making you feel extremely tired",c:"令人筋疲力尽的"},
+  {u:5,w:"gloom",p:"/gluːm/",d:"a state of depression or despondency",c:"忧郁；沮丧"},
+  {u:5,w:"grandeur",p:"/'grændʒə/",d:"impressive power",c:"宏伟；壮观"},
+  {u:5,w:"grovel",p:"/'grɒvəl/",d:"act in an over-friendly manner in order to obtain sb.'s forgiveness or favour",c:"卑躬屈膝；讨好"},
+  {u:5,w:"harangue",p:"/hə'ræŋ/",d:"a long and aggressive speech",c:"长篇激烈的演说"},
+  {u:5,w:"idiotic",p:"/ɪdɪ'ɒtɪk/",d:"stupid",c:"愚蠢的"},
+  {u:5,w:"infidelity",p:"/ɪnfɪ'deləti/",d:"the act or state of being unfaithful to one's wife or husband",c:"不忠（尤指对配偶）"},
+  {u:5,w:"libretto",p:"/li'bretəʊ/",d:"the text of an opera or other long vocal work",c:"歌剧剧本；歌词"},
+  {u:5,w:"loftily",p:"/'lɒftɪli/",d:"proudly; self-importantly",c:"高傲地；自大地"},
+  {u:5,w:"mania",p:"/'meɪnɪə/",d:"excessive enthusiasm or desire; depressive mental disorder",c:"狂热；躁狂症"},
+  {u:5,w:"mistress",p:"/'mɪstrɪs/",d:"a woman (other than a wife) having a sexual relationship with a married man",c:"情妇"},
+  {u:5,w:"nerve",p:"/nɜːv/",d:"(pl. nerves) anxious or nervous state",c:"神经紧张；焦虑"},
+  {u:5,w:"pamphlet",p:"/'pæmflɪt/",d:"a small booklet or leaflet containing information or arguments about a single subject",c:"小册子"},
+  {u:5,w:"procession",p:"/prə'seʃən/",d:"a persistent succession of people or things; sequence",c:"一连串；队列"},
+  {u:5,w:"rajah",p:"/'rɑːdʒə/",d:"an Indian king or prince who ruled over a state in the past",c:"拉贾（印度王公/首领）"},
+  {u:5,w:"rave",p:"/reɪv/",d:"talk wildly or incoherently, as if one were mad; speak out wildly",c:"胡言乱语；狂热地说"},
+
+  // Unit 6 - The Company Man (31 words)
+  {u:6,w:"accomplice",p:"/ə'kʌmplɪs/",d:"a person who helps another commit a crime",c:"共犯；帮凶"},
+  {u:6,w:"acknowledge",p:"/ək'nɒlɪdʒ/",d:"show that one has noticed or recognized by making a gesture or greeting",c:"承认；对……做出回应（如致意）"},
+  {u:6,w:"assemble",p:"/ə'sembl/",d:"gather together for a common purpose",c:"集合；聚集"},
+  {u:6,w:"athwart",p:"/ə'θwɔːt/",d:"across; from side to side of",c:"横跨；穿过"},
+  {u:6,w:"awkwardly",p:"/'ɔːkwədlɪ/",d:"not smoothly or gracefully; ungainly",c:"笨拙地；不协调地"},
+  {u:6,w:"bonsai",p:"/'bɒnsaɪ/",d:"an ornamental tree or shrub grown in a pot and artificially prevented from reaching its normal size",c:"盆景"},
+  {u:6,w:"cache",p:"/kæʃ/",d:"a collection of items of the same type stored in a hidden or inaccessible place",c:"隐藏处；贮藏物"},
+  {u:6,w:"close-cropped",p:"/'kləʊs'krɒpt/",d:"(typically of hair or grass) cut very short",c:"剪得很短的（头发或草）"},
+  {u:6,w:"deceased",p:"/dɪ'siːst/",d:"recently dead",c:"已故的；死亡的"},
+  {u:6,w:"dignified",p:"/'dɪgnɪfaɪd/",d:"having or showing a composed or serious manner that is worthy of respect",c:"有尊严的；庄重的"},
+  {u:6,w:"disinfectant",p:"/dɪsɪn'fektənt/",d:"a chemical liquid that destroys bacteria",c:"消毒剂"},
+  {u:6,w:"dome",p:"/dəʊm/",d:"an object that has a shape similar to a round roof",c:"圆顶状物体"},
+  {u:6,w:"facsimile",p:"/fæk'sɪmɪli/",d:"an exact copy, esp. of written or printed material",c:"复制品；摹本"},
+  {u:6,w:"forceps",p:"/'fɔ:seps/",d:"a pair of pincers or tweezers used in surgery or in a laboratory",c:"镊子；钳子"},
+  {u:6,w:"furtive",p:"/'fɜ:tɪv/",d:"attempting to avoid notice or attention; secretive",c:"偷偷摸摸的；鬼鬼祟祟的"},
+  {u:6,w:"heft",p:"/heft/",d:"lift or hold sth. in order to test its weight",c:"举起以掂量重量"},
+  {u:6,w:"inert",p:"/ɪ'nɜːt/",d:"lacking the ability or strength to move",c:"无活动能力的；惰性的"},
+  {u:6,w:"kickshaw",p:"/'kɪkʃɔː/",d:"sth. showy but without value; a fancy but insubstantial cooked dish, esp. one of foreign origin",c:"华而不实的东西"},
+  {u:6,w:"oatmeal",p:"/'əʊtmiːl/",d:"meal made from ground oats used in porridge, oatcakes, or other food",c:"燕麦粉；燕麦片"},
+  {u:6,w:"probe",p:"/prəʊb/",d:"physically explore or examine sth. with hands or with an instrument",c:"探查；探测"},
+  {u:6,w:"prune",p:"/pruːn/",d:"trim (a tree) by cutting away dead or overgrown branches or stems",c:"修剪（树枝等）"},
+  {u:6,w:"repose",p:"/rɪ'pəʊz/",d:"temporary rest from activity, excitement, or exertion, esp. sleep or the rest given by sleep",c:"休息；安眠"},
+  {u:6,w:"scab",p:"/skæb/",d:"a dry, rough protective crust that forms over a cut or wound during healing",c:"痂"},
+  {u:6,w:"scramble",p:"/'skræmbl/",d:"make sth. jumbled or muddled",c:"搅乱；使混乱"},
+  {u:6,w:"shard",p:"/ʃɑːd/",d:"a piece of broken ceramic, metal, or glass, typically having sharp edges",c:"碎片（尤指陶瓷、金属、玻璃的尖锐碎片）"},
+  {u:6,w:"snowbound",p:"/'snəʊbaʊnd/",d:"covered in snow",c:"被雪困住的"},
+  {u:6,w:"stance",p:"/stæns/",d:"a person's position or way of standing; the attitude of a person or organization towards sth.",c:"站姿；立场"},
+  {u:6,w:"stump",p:"/stʌmp/",d:"the small projecting remnant of sth. that has been cut or broken off or worn away",c:"残余部分；残桩"},
+  {u:6,w:"tan",p:"/tæn/",d:"(of the sun) cause sb.'s skin to become brown or browner",c:"晒黑"},
+  {u:6,w:"vile",p:"/vaɪl/",d:"extremely unpleasant",c:"极其讨厌的；恶劣的"},
+  {u:6,w:"scrambled egg",p:"",d:"a dish of eggs prepared by beating them with a little liquid and then cooking and stirring gently",c:"炒鸡蛋"},
+
+  // Unit 7 - Equality of Opportunity (29 words)
+  {u:7,w:"affluent",p:"/'æfluənt/",d:"having a large amount of money and owning many expensive things",c:"富裕的；富足的"},
+  {u:7,w:"aspiration",p:"/æspə'reɪʃən/",d:"a strong desire to achieve sth. high or great",c:"抱负；志向"},
+  {u:7,w:"bleak",p:"/bliːk/",d:"not hopeful or encouraging; depressing",c:"暗淡的；令人沮丧的"},
+  {u:7,w:"brink",p:"/brɪŋk/",d:"the verge of a particular state, event, or action, typically one that is unwelcome or disastrous",c:"边缘（尤指灾难的边缘）"},
+  {u:7,w:"complacency",p:"/kəm'pleɪsənsi/",d:"a feeling of being satisfied with how things are and not wanting to try to make them better",c:"自满；满足"},
+  {u:7,w:"condemn",p:"/kən'dem/",d:"cause sb. to suffer or live in difficult or unpleasant conditions",c:"使陷入困境；谴责"},
+  {u:7,w:"consensus",p:"/kən'sensəs/",d:"a general agreement by all the people in a group",c:"共识；一致意见"},
+  {u:7,w:"contemporary",p:"/kən'tempərəri/",d:"happening or beginning now or in recent times",c:"当代的；同时代的"},
+  {u:7,w:"contingent",p:"/kən'tɪndʒənt/",d:"dependent on sth. else that may or may not happen",c:"取决于……的；依条件而定的"},
+  {u:7,w:"creed",p:"/kriːd/",d:"an idea or set of beliefs guiding the action of a person or group",c:"信条；信念"},
+  {u:7,w:"deception",p:"/dɪ'sepʃən/",d:"the act of making sb. believe sth. that is not true",c:"欺骗；骗局"},
+  {u:7,w:"democratize",p:"/dɪ'mɒkrətaɪz/",d:"make sth. available to all people",c:"使民主化；使所有人可获得"},
+  {u:7,w:"diminish",p:"/dɪ'mɪnɪʃ/",d:"become or cause sth. to become less in size, importance, etc.",c:"减少；降低"},
+  {u:7,w:"discharge",p:"/dɪs'tʃɑːdʒ/",d:"get rid of (a debt or obligation) by performing an appropriate action (such as payment)",c:"履行（债务或义务）"},
+  {u:7,w:"disparity",p:"/dɪ'spærɪti/",d:"a noticeable difference between things",c:"差异；不平等"},
+  {u:7,w:"egalitarian",p:"/ɪɡæli'teəriən/",d:"aiming for equal wealth, status, etc. for all people",c:"平等主义的"},
+  {u:7,w:"gut",p:"/gʌt/",d:"make sth. no longer effective",c:"掏空；使失效"},
+  {u:7,w:"hoax",p:"/həʊks/",d:"a trick in which sb. deliberately tells people that sth. is true when it is not",c:"骗局；恶作剧"},
+  {u:7,w:"imperative",p:"/ɪm'perətɪv/",d:"very important and urgent",c:"紧迫的；至关重要的"},
+  {u:7,w:"inaugural",p:"/ɪ'nɔːɡjʊrəl/",d:"happening as part of an official ceremony or celebration when sb. (such as a newly elected official) begins an important job",c:"就职的；开幕的"},
+  {u:7,w:"indefensible",p:"/ɪndɪ'fensəbl/",d:"not able to be thought of as good or acceptable",c:"不可辩护的；站不住脚的"},
+  {u:7,w:"lull",p:"/lʌl/",d:"make sb. feel relaxed or confident so that they are not prepared for anything unpleasant",c:"使放松警惕；麻痹"},
+  {u:7,w:"magnitude",p:"/'mægnɪtjuːd/",d:"the size, extent, or importance of sth.",c:"大小；重要性"},
+  {u:7,w:"minuscule",p:"/'mɪnəskjuːl/",d:"very small",c:"极小的"},
+  {u:7,w:"myth",p:"/mɪθ/",d:"an idea or story that many people believe, but which is not true",c:"迷思；错误的观念"},
+  {u:7,w:"oddity",p:"/'ɒdɪtɪ/",d:"a strange or unusual person or thing",c:"怪人；怪事"},
+  {u:7,w:"reaffirm",p:"/riːə'fɜːm/",d:"state again clearly and firmly",c:"重申"},
+  {u:7,w:"robust",p:"/rəʊ'bʌst/",d:"successful or impressive and not likely to fail or weaken",c:"稳健的；强劲的"},
+  {u:7,w:"segregation",p:"/seɡrɪ'ɡeɪʃən/",d:"the practice or policy of keeping people of different races, religions, etc. separate from each other",c:"隔离（尤指种族隔离）"}
+];
+
+// ==================== STATE ====================
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem('vocab_'+k); return v ? JSON.parse(v) : d; } catch(e) { return d; } },
+  set(k, v) { try { localStorage.setItem('vocab_'+k, JSON.stringify(v)); } catch(e) {} }
+};
+
+// errorStats: { word: { total, wrong } }
+// history: [{ date, score, total, unitFilter, mode }]
+
+let state = {
+  screen: 'home', // home | quiz | results
+  mode: 'choice', // choice | typing
+  selectedUnits: [1,2,3,4,5,6,7],
+  questionCount: 20,
+  quizQuestions: [],
+  currentIndex: 0,
+  answers: [], // { questionIdx, selectedWord, isCorrect }
+  quizStartTime: 0,
+  timerInterval: null,
+  timerSeconds: 0,
+  showFeedback: false,
+  // Results tab
+  resultsTab: 'summary' // summary | review | charts
+};
+
+// ==================== HELPERS ====================
+function shuffle(a) {
+  const arr = [...a];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function getFilteredVocab() {
+  return VOCAB.filter(v => state.selectedUnits.includes(v.u));
+}
+
+function getErrorStats() {
+  return LS.get('errorStats', {});
+}
+
+function recordAnswer(word, isCorrect) {
+  const stats = getErrorStats();
+  if (!stats[word]) stats[word] = { total: 0, wrong: 0 };
+  stats[word].total++;
+  if (!isCorrect) stats[word].wrong++;
+  LS.set('errorStats', stats);
+}
+
+function getErrorRate(word) {
+  const stats = getErrorStats();
+  const s = stats[word];
+  if (!s || s.total === 0) return 0;
+  return s.wrong / s.total;
+}
+
+function getHighErrorWords(threshold = 0.3) {
+  const stats = getErrorStats();
+  return Object.entries(stats)
+    .filter(([w, s]) => s.total >= 3 && s.wrong / s.total >= threshold)
+    .map(([w, s]) => ({ word: w, rate: s.wrong / s.total, total: s.total, wrong: s.wrong }))
+    .sort((a, b) => b.rate - a.rate);
+}
+
+function saveHistory(score, total, units, mode) {
+  const h = LS.get('history', []);
+  h.unshift({ date: new Date().toISOString(), score, total, units, mode });
+  if (h.length > 100) h.length = 100;
+  LS.set('history', h);
+}
+
+function getHistory() { return LS.get('history', []); }
+
+function clearAllData() {
+  localStorage.removeItem('vocab_errorStats');
+  localStorage.removeItem('vocab_history');
+}
+
+// ==================== RENDER ====================
+function render() {
+  const app = document.getElementById('app');
+  switch (state.screen) {
+    case 'home': app.innerHTML = renderHome(); break;
+    case 'quiz': app.innerHTML = renderQuiz(); break;
+    case 'results': app.innerHTML = renderResults(); break;
+  }
+  bindEvents();
+}
+
+// ---- HOME ----
+function renderHome() {
+  const vocab = getFilteredVocab();
+  const totalAvailable = vocab.length;
+  const qc = Math.min(state.questionCount, totalAvailable);
+  return `
+    <div class="header">
+      <h1>📚 基础英语4 · 词汇测试</h1>
+      <div class="subtitle">Comprehensive English 4 — Vocabulary Quiz</div>
+    </div>
+    <div class="screen active">
+      <div class="card">
+        <h3 style="margin-bottom:12px">📝 测试模式</h3>
+        <div class="mode-grid">
+          <div class="mode-card ${state.mode==='choice'?'selected':''}" data-action="setMode" data-mode="choice">
+            <div class="icon">🔤</div>
+            <div class="label">英文释义 → 选单词</div>
+            <div class="desc">看到英文定义，从4个选项中选出正确单词（匹配期末题型）</div>
+          </div>
+          <div class="mode-card ${state.mode==='reverse'?'selected':''}" data-action="setMode" data-mode="reverse">
+            <div class="icon">🔄</div>
+            <div class="label">单词 → 选释义</div>
+            <div class="desc">看到单词，从4个选项中选择对应的英文释义</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px">📂 选择单元</h3>
+        <div class="unit-tags">
+          <div class="unit-tag ${state.selectedUnits.length===7?'selected':''}" data-action="selectAllUnits">全部 (7个单元)</div>
+          ${[1,2,3,4,5,6,7].map(u => `
+            <div class="unit-tag ${state.selectedUnits.includes(u)?'selected':''}" data-action="toggleUnit" data-unit="${u}">
+              Unit ${u} <span style="font-size:0.7rem;opacity:0.7">(${VOCAB.filter(v=>v.u===u).length}词)</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px">🔢 题目数量: <span id="qcDisplay">${qc}</span> / ${totalAvailable}</h3>
+        <div class="range-group">
+          <span style="font-size:0.85rem">5</span>
+          <input type="range" min="5" max="${totalAvailable}" value="${qc}" step="5" id="qcRange">
+          <span style="font-size:0.85rem">${totalAvailable}</span>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" data-action="startQuiz" style="font-size:1.1rem;padding:14px" ${totalAvailable<4?'disabled':''}>
+        🚀 开始测试
+      </button>
+      ${totalAvailable<4 ? '<p style="text-align:center;color:var(--danger);margin-top:8px;font-size:0.85rem">⚠️ 请至少选择包含4个以上单词的单元</p>' : ''}
+      <div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" data-action="goWordBank">📖 词汇总表</button>
+        <button class="btn btn-outline btn-sm" data-action="goStats">📊 统计与历史</button>
+        <button class="btn btn-outline btn-sm" data-action="goErrorReview">🔴 错词复习</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---- QUIZ ----
+function renderQuiz() {
+  const q = state.quizQuestions[state.currentIndex];
+  const vocab = q.vocab;
+  const total = state.quizQuestions.length;
+  const idx = state.currentIndex;
+  const showFB = state.showFeedback;
+  const userAnswer = state.answers[idx];
+
+  let optionsHTML = '';
+  if (state.mode === 'choice') {
+    // definition → choose word
+    optionsHTML = q.options.map((opt, i) => {
+      let cls = 'option';
+      if (showFB && userAnswer) {
+        if (opt.w === vocab.w) cls += ' correct';
+        else if (opt.w === userAnswer.selectedWord && !userAnswer.isCorrect) cls += ' wrong';
+      } else if (!showFB && userAnswer && opt.w === userAnswer.selectedWord) {
+        cls += ' selected';
+      }
+      return `
+        <div class="${cls}" data-action="selectOption" data-word="${opt.w}" data-idx="${i}">
+          <span class="letter">${'ABCD'[i]}</span>
+          <span>${opt.w} ${opt.p ? '<small style="color:var(--muted)">'+opt.p+'</small>' : ''}</span>
+        </div>`;
+    }).join('');
+  } else {
+    // reverse: word → choose definition
+    optionsHTML = q.options.map((opt, i) => {
+      let cls = 'option';
+      if (showFB && userAnswer) {
+        if (opt.w === vocab.w) cls += ' correct';
+        else if (opt.w === userAnswer.selectedWord && !userAnswer.isCorrect) cls += ' wrong';
+      } else if (!showFB && userAnswer && opt.w === userAnswer.selectedWord) {
+        cls += ' selected';
+      }
+      return `
+        <div class="${cls}" data-action="selectOption" data-word="${opt.w}" data-idx="${i}">
+          <span class="letter">${'ABCD'[i]}</span>
+          <span style="font-size:0.9rem">${opt.d}</span>
+        </div>`;
+    }).join('');
+  }
+
+  let fbHTML = '';
+  if (showFB && userAnswer) {
+    const cls = userAnswer.isCorrect ? 'correct' : 'wrong';
+    const icon = userAnswer.isCorrect ? '✅' : '❌';
+    fbHTML = `
+      <div class="feedback show ${cls}">
+        ${icon} ${userAnswer.isCorrect ? '回答正确！' : `回答错误。正确答案是 <strong>${vocab.w}</strong> — ${vocab.c}`}
+      </div>`;
+  }
+
+  const timerHTML = state.timerSeconds > 0
+    ? `<span class="quiz-timer ${state.timerSeconds <= 10 ? 'warning' : ''}">⏱ ${Math.floor(state.timerSeconds/60)}:${String(state.timerSeconds%60).padStart(2,'0')}</span>`
+    : '';
+
+  return `
+    <div class="header" style="padding-top:16px">
+      <h1 style="font-size:1.3rem">📝 词汇测试</h1>
+    </div>
+    <div class="screen active">
+      <div class="card">
+        <div class="quiz-header">
+          <span class="quiz-progress">第 ${idx+1} / ${total} 题</span>
+          ${timerHTML}
+          <span style="font-size:0.8rem;color:var(--muted)">Unit ${vocab.u}</span>
+        </div>
+        <div style="background:var(--bg);height:6px;border-radius:3px;margin-bottom:20px">
+          <div style="width:${((idx+(showFB?1:0))/total)*100}%;height:100%;background:var(--accent);border-radius:3px;transition:width 0.3s"></div>
+        </div>
+        <div class="definition-box">
+          <span class="tag">${state.mode==='choice' ? '英文释义' : '单词'}</span>
+          <div class="def-text">
+            ${state.mode==='choice'
+              ? vocab.d
+              : `<strong>${vocab.w}</strong> ${vocab.p ? '<small style="color:var(--muted)">'+vocab.p+'</small>' : ''}`
+            }
+          </div>
+        </div>
+        <div class="options">${optionsHTML}</div>
+        ${fbHTML}
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        ${showFB
+          ? `<button class="btn btn-primary" data-action="nextQuestion">${idx+1 < total ? '下一题 →' : '查看成绩 📊'}</button>`
+          : `<button class="btn btn-outline btn-sm" data-action="skipQuestion">跳过</button>`
+        }
+      </div>
+    </div>
+  `;
+}
+
+// ---- RESULTS ----
+function renderResults() {
+  const total = state.quizQuestions.length;
+  const correct = state.answers.filter(a => a.isCorrect).length;
+  const pct = Math.round(correct / total * 100);
+  let cls = pct >= 90 ? 'excellent' : pct >= 70 ? 'good' : pct >= 50 ? 'fair' : 'poor';
+
+  const highErrors = getHighErrorWords(0.3).filter(he =>
+    state.quizQuestions.some(q => q.vocab.w === he.word)
+  );
+
+  let content = '';
+  if (state.resultsTab === 'summary') {
+    content = `
+      <div class="result-summary">
+        <div class="score-circle ${cls}">
+          <span class="pct">${pct}%</span>
+          <span class="label">正确率</span>
+        </div>
+        <p style="font-size:1.1rem;font-weight:600">
+          ${pct>=90?'🏆 太棒了！' : pct>=70?'👍 表现不错！' : pct>=50?'📖 继续加油！' : '💪 需要更多练习！'}
+        </p>
+      </div>
+      <div class="result-stats">
+        <div class="stat-card"><div class="num green">${correct}</div><div class="lbl">✅ 正确</div></div>
+        <div class="stat-card"><div class="num red">${total-correct}</div><div class="lbl">❌ 错误</div></div>
+        <div class="stat-card"><div class="num orange">${state.timerSeconds ? Math.floor(state.timerSeconds/60)+'分'+state.timerSeconds%60+'秒' : '不限时'}</div><div class="lbl">⏱ 用时</div></div>
+      </div>
+      ${highErrors.length > 0 ? `
+      <div class="high-error-section">
+        <h3>⚠️ 高频错误词汇（错误率 ≥ 30%）</h3>
+        <table class="error-table">
+          <thead><tr><th>单词</th><th>错误率</th><th>错误/总次数</th></tr></thead>
+          <tbody>
+            ${highErrors.map(he => `
+              <tr>
+                <td class="word-col">${he.word}</td>
+                <td class="rate-col ${he.rate>=0.5?'high':'mid'}">${Math.round(he.rate*100)}%</td>
+                <td>${he.wrong} / ${he.total}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>` : ''}
+    `;
+  } else if (state.resultsTab === 'review') {
+    content = `
+      <div class="review-list">
+        ${state.quizQuestions.map((q, i) => {
+          const a = state.answers[i];
+          const cls = a && a.isCorrect ? 'was-correct' : 'was-wrong';
+          const icon = a && a.isCorrect ? '✅' : '❌';
+          return `
+            <div class="review-item ${cls}">
+              <div class="q-word">${icon} ${q.vocab.w} ${q.vocab.p ? '<small style="color:var(--muted)">'+q.vocab.p+'</small>' : ''}</div>
+              <div class="q-def">${q.vocab.d}</div>
+              <div class="q-meta">中文：${q.vocab.c} ${a ? '| 你选了：<strong>'+(a.selectedWord||'未作答')+'</strong>' : ''} | Unit ${q.vocab.u}</div>
+            </div>`;
+        }).join('')}
+      </div>
+    `;
+  } else if (state.resultsTab === 'charts') {
+    const unitStats = {};
+    state.quizQuestions.forEach((q, i) => {
+      const u = q.vocab.u;
+      if (!unitStats[u]) unitStats[u] = { total: 0, correct: 0 };
+      unitStats[u].total++;
+      if (state.answers[i] && state.answers[i].isCorrect) unitStats[u].correct++;
+    });
+    const maxTotal = Math.max(...Object.values(unitStats).map(s => s.total), 1);
+    content = `
+      <h3 style="margin-bottom:12px">📊 各单元正确率</h3>
+      ${Object.entries(unitStats).map(([u, s]) => {
+        const pct = Math.round(s.correct / s.total * 100);
+        return `
+          <div class="chart-bar-wrap">
+            <span class="chart-bar-label">Unit ${u}</span>
+            <div class="chart-bar-track">
+              <div class="chart-bar-fill" style="width:${pct}%;background:${pct>=70?'var(--success)':pct>=40?'var(--warn)':'var(--danger)'}">${pct}%</div>
+            </div>
+            <span style="font-size:0.78rem;color:var(--muted)">${s.correct}/${s.total}</span>
+          </div>`;
+      }).join('')}
+      <h3 style="margin:20px 0 12px">📈 历史记录（最近10次）</h3>
+      ${getHistory().slice(0,10).map((h,i) => `
+        <div class="history-item">
+          <span>第${i+1}次 · ${h.mode==='choice'?'释义→单词':'单词→释义'} · Unit ${h.units.join(',')}</span>
+          <span class="h-score" style="color:${h.score/h.total>=0.7?'var(--success)':h.score/h.total>=0.4?'var(--warn)':'var(--danger)'}">${h.score}/${h.total} (${Math.round(h.score/h.total*100)}%)</span>
+          <span class="h-date">${new Date(h.date).toLocaleDateString('zh-CN')}</span>
+        </div>
+      `).join('') || '<p style="color:var(--muted);text-align:center">暂无历史记录</p>'}
+    `;
+  }
+
+  return `
+    <div class="header" style="padding-top:16px">
+      <h1 style="font-size:1.3rem">📊 测试结果</h1>
+    </div>
+    <div class="screen active">
+      <div class="card">
+        <div class="tabs">
+          <button class="tab ${state.resultsTab==='summary'?'active':''}" data-action="setResultsTab" data-tab="summary">📋 总览</button>
+          <button class="tab ${state.resultsTab==='review'?'active':''}" data-action="setResultsTab" data-tab="review">📝 逐题回顾</button>
+          <button class="tab ${state.resultsTab==='charts'?'active':''}" data-action="setResultsTab" data-tab="charts">📊 统计</button>
+        </div>
+        ${content}
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" data-action="retrySame">🔄 重新测试（相同设置）</button>
+        <button class="btn btn-outline" data-action="retryErrors">🔴 只测错题</button>
+        <button class="btn btn-outline" data-action="goHome">🏠 返回首页</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---- WORD BANK ----
+function renderWordBank(searchTerm = '') {
+  const stats = getErrorStats();
+  let words = [...VOCAB];
+  if (searchTerm) {
+    const s = searchTerm.toLowerCase();
+    words = words.filter(v => v.w.toLowerCase().includes(s) || v.d.toLowerCase().includes(s) || v.c.includes(s));
+  }
+  return `
+    <div class="header" style="padding-top:16px">
+      <h1 style="font-size:1.3rem">📖 词汇总表</h1>
+      <div class="subtitle">全部 ${VOCAB.length} 个词汇 · 点击单词查看详情</div>
+    </div>
+    <div class="screen active">
+      <div class="card">
+        <input class="word-bank-search" type="text" placeholder="🔍 搜索单词、释义..." id="wbSearch" value="${searchTerm.replace(/"/g,'&quot;')}">
+        <div style="max-height:60vh;overflow-y:auto">
+          <table class="wb-table">
+            <thead><tr><th>单词</th><th>音标</th><th>英文释义</th><th>中文</th><th>错误率</th></tr></thead>
+            <tbody>
+              ${words.map(v => {
+                const rate = getErrorRate(v.w);
+                const s = stats[v.w];
+                const hasData = s && s.total > 0;
+                let errCls = '';
+                if (hasData) {
+                  if (rate >= 0.5) errCls = 'high';
+                  else if (rate >= 0.25) errCls = 'mid';
+                  else errCls = 'low';
+                }
+                return `
+                  <tr>
+                    <td class="wb-word" data-action="showWordDetail" data-word="${v.w}">${v.w}</td>
+                    <td style="font-size:0.8rem;color:var(--muted)">${v.p}</td>
+                    <td style="font-size:0.82rem">${v.d}</td>
+                    <td style="font-size:0.85rem">${v.c}</td>
+                    <td>${hasData ? `<span class="wb-err ${errCls}">${Math.round(rate*100)}% (${s.wrong}/${s.total})</span>` : '<span style="color:var(--muted);font-size:0.78rem">未测试</span>'}</td>
+                  </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-block" data-action="goHome">🏠 返回首页</button>
+    </div>
+  `;
+}
+
+// ---- ERROR REVIEW ----
+function renderErrorReview() {
+  const stats = getErrorStats();
+  const errorWords = Object.entries(stats)
+    .filter(([w, s]) => s.wrong > 0)
+    .map(([w, s]) => ({ word: w, rate: s.wrong / s.total, total: s.total, wrong: s.wrong }))
+    .sort((a, b) => b.rate - a.rate);
+
+  return `
+    <div class="header" style="padding-top:16px">
+      <h1 style="font-size:1.3rem">🔴 错词复习</h1>
+      <div class="subtitle">基于你的答题历史，重点关注高频错误</div>
+    </div>
+    <div class="screen active">
+      <div class="card">
+        ${errorWords.length === 0
+          ? '<p style="text-align:center;color:var(--muted);padding:30px">🎉 暂无错题记录！先去做几套测试吧。</p>'
+          : `
+          <table class="error-table">
+            <thead><tr><th>#</th><th>单词</th><th>错误率</th><th>错误/总数</th><th>英文释义</th><th>中文</th></tr></thead>
+            <tbody>
+              ${errorWords.map((ew, i) => {
+                const v = VOCAB.find(vv => vv.w === ew.word);
+                return `
+                  <tr>
+                    <td>${i+1}</td>
+                    <td class="word-col">${ew.word}</td>
+                    <td class="rate-col ${ew.rate>=0.5?'high':'mid'}">${Math.round(ew.rate*100)}%</td>
+                    <td>${ew.wrong} / ${ew.total}</td>
+                    <td style="font-size:0.82rem">${v ? v.d : ''}</td>
+                    <td style="font-size:0.85rem">${v ? v.c : ''}</td>
+                  </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+          ${errorWords.length >= 4 ? `<button class="btn btn-primary btn-block" style="margin-top:16px" data-action="startErrorQuiz">🔴 针对错题进行专项测试</button>` : ''}
+          <button class="btn btn-danger btn-block btn-sm" style="margin-top:8px" data-action="clearErrorStats">🗑️ 清除错题记录</button>
+        `}
+      </div>
+      <button class="btn btn-outline btn-block" data-action="goHome">🏠 返回首页</button>
+    </div>
+  `;
+}
+
+// ---- STATS ----
+function renderStats() {
+  const history = getHistory();
+  const stats = getErrorStats();
+  const totalAnswered = Object.values(stats).reduce((sum, s) => sum + s.total, 0);
+  const totalWrong = Object.values(stats).reduce((sum, s) => sum + s.wrong, 0);
+  const totalCorrect = totalAnswered - totalWrong;
+  const overallRate = totalAnswered > 0 ? Math.round(totalCorrect / totalAnswered * 100) : 0;
+
+  // Unit breakdown from history
+  const unitPerf = {};
+  history.forEach(h => {
+    h.units.forEach(u => {
+      if (!unitPerf[u]) unitPerf[u] = { total: 0, correct: 0 };
+    });
+  });
+  // Use error stats for unit breakdown
+  const unitStatsFromVocab = {};
+  VOCAB.forEach(v => {
+    if (!unitStatsFromVocab[v.u]) unitStatsFromVocab[v.u] = { total: 0, correct: 0 };
+    const s = stats[v.w];
+    if (s) {
+      unitStatsFromVocab[v.u].total += s.total;
+      unitStatsFromVocab[v.u].correct += s.total - s.wrong;
+    }
+  });
+
+  return `
+    <div class="header" style="padding-top:16px">
+      <h1 style="font-size:1.3rem">📊 学习统计</h1>
+    </div>
+    <div class="screen active">
+      <div class="card">
+        <div class="result-stats">
+          <div class="stat-card"><div class="num">${totalAnswered}</div><div class="lbl">总答题数</div></div>
+          <div class="stat-card"><div class="num green">${totalCorrect}</div><div class="lbl">正确</div></div>
+          <div class="stat-card"><div class="num red">${totalWrong}</div><div class="lbl">错误</div></div>
+        </div>
+        ${totalAnswered > 0 ? `
+          <div style="text-align:center;margin:16px 0">
+            <span style="font-size:1.5rem;font-weight:800;color:${overallRate>=70?'var(--success)':overallRate>=40?'var(--warn)':'var(--danger)'}">${overallRate}%</span>
+            <span style="color:var(--muted)"> 综合正确率</span>
+          </div>
+        ` : '<p style="text-align:center;color:var(--muted);padding:20px">还没有答题记录，开始你的第一次测试吧！</p>'}
+      </div>
+      ${totalAnswered > 0 ? `
+      <div class="card">
+        <h3 style="margin-bottom:12px">📈 各单元表现</h3>
+        ${[1,2,3,4,5,6,7].map(u => {
+          const s = unitStatsFromVocab[u] || { total: 0, correct: 0 };
+          const pct = s.total > 0 ? Math.round(s.correct / s.total * 100) : 0;
+          return `
+            <div class="chart-bar-wrap">
+              <span class="chart-bar-label">Unit ${u}</span>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill" style="width:${Math.max(pct,5)}%;background:${pct>=70?'var(--success)':pct>=40?'var(--warn)':'var(--danger)'}">${s.total>0?pct+'%':'无数据'}</div>
+              </div>
+              <span style="font-size:0.78rem;color:var(--muted)">${s.total}题</span>
+            </div>`;
+        }).join('')}
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px">📋 测试历史（最近20次）</h3>
+        ${history.slice(0,20).map((h,i) => `
+          <div class="history-item">
+            <span>${new Date(h.date).toLocaleString('zh-CN')}</span>
+            <span>${h.mode==='choice'?'释义→单词':'单词→释义'} · Unit${h.units.sort().join(',')}</span>
+            <span class="h-score" style="color:${h.score/h.total>=0.7?'var(--success)':h.score/h.total>=0.4?'var(--warn)':'var(--danger)'}">${h.score}/${h.total}</span>
+          </div>
+        `).join('')}
+      </div>` : ''}
+      <button class="btn btn-outline btn-block" data-action="goHome">🏠 返回首页</button>
+      ${totalAnswered > 0 ? `<button class="btn btn-danger btn-block btn-sm" style="margin-top:8px" data-action="clearAllData">🗑️ 清除全部数据</button>` : ''}
+    </div>
+  `;
+}
+
+// ==================== ACTIONS ====================
+function startQuiz() {
+  const vocab = getFilteredVocab();
+  const total = Math.min(state.questionCount, vocab.length);
+  if (total < 4) { showToast('请至少选择包含4个以上单词的单元'); return; }
+
+  // Select random questions
+  const selectedVocab = shuffle(vocab).slice(0, total);
+
+  // For each question, generate 4 options (1 correct + 3 distractors)
+  const questions = selectedVocab.map(v => {
+    const others = shuffle(VOCAB.filter(vv => vv.w !== v.w));
+    const distractors = others.slice(0, 3);
+    const options = shuffle([v, ...distractors]);
+    return { vocab: v, options };
+  });
+
+  state.quizQuestions = questions;
+  state.currentIndex = 0;
+  state.answers = new Array(questions.length).fill(null);
+  state.screen = 'quiz';
+  state.showFeedback = false;
+  state.quizStartTime = Date.now();
+  state.timerSeconds = 0;
+
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(() => {
+    state.timerSeconds = Math.floor((Date.now() - state.quizStartTime) / 1000);
+    // Re-render only timer in quiz screen
+    const timerEl = document.querySelector('.quiz-timer');
+    if (timerEl && state.screen === 'quiz') {
+      const s = state.timerSeconds;
+      timerEl.textContent = `⏱ ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+      timerEl.className = `quiz-timer ${s <= 10 ? 'warning' : ''}`;
+    }
+  }, 1000);
+
+  render();
+  window.scrollTo(0, 0);
+}
+
+function selectOption(word, idx) {
+  if (state.showFeedback) return;
+  const q = state.quizQuestions[state.currentIndex];
+  const isCorrect = word === q.vocab.w;
+
+  state.answers[state.currentIndex] = { selectedWord: word, isCorrect };
+  state.showFeedback = true;
+
+  recordAnswer(q.vocab.w, isCorrect);
+  render();
+}
+
+function nextQuestion() {
+  if (state.currentIndex + 1 >= state.quizQuestions.length) {
+    finishQuiz();
+    return;
+  }
+  state.currentIndex++;
+  state.showFeedback = false;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function skipQuestion() {
+  if (state.showFeedback) return;
+  state.answers[state.currentIndex] = { selectedWord: null, isCorrect: false };
+  if (state.currentIndex + 1 >= state.quizQuestions.length) {
+    finishQuiz();
+    return;
+  }
+  state.currentIndex++;
+  state.showFeedback = false;
+  render();
+  window.scrollTo(0, 0);
+}
+
+function finishQuiz() {
+  if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+  const total = state.quizQuestions.length;
+  const correct = state.answers.filter(a => a && a.isCorrect).length;
+  saveHistory(correct, total, state.selectedUnits, state.mode);
+  state.screen = 'results';
+  state.resultsTab = 'summary';
+  render();
+  window.scrollTo(0, 0);
+}
+
+function showToast(msg) {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2100);
+}
+
+// ==================== EVENT BINDING ====================
+function bindEvents() {
+  document.querySelectorAll('[data-action]').forEach(el => {
+    el.removeEventListener('click', handleAction);
+    el.addEventListener('click', handleAction);
+  });
+
+  const qcRange = document.getElementById('qcRange');
+  if (qcRange) {
+    qcRange.removeEventListener('input', handleQCRange);
+    qcRange.addEventListener('input', handleQCRange);
+  }
+
+  const wbSearch = document.getElementById('wbSearch');
+  if (wbSearch) {
+    wbSearch.removeEventListener('input', handleWBSearch);
+    wbSearch.addEventListener('input', handleWBSearch);
+  }
+}
+
+function handleAction(e) {
+  const el = e.currentTarget;
+  const action = el.dataset.action;
+
+  switch (action) {
+    case 'setMode':
+      state.mode = el.dataset.mode;
+      render();
+      break;
+    case 'toggleUnit':
+      const unit = parseInt(el.dataset.unit);
+      if (state.selectedUnits.includes(unit)) {
+        if (state.selectedUnits.length > 1) state.selectedUnits = state.selectedUnits.filter(u => u !== unit);
+      } else {
+        state.selectedUnits = [...state.selectedUnits, unit].sort();
+      }
+      state.questionCount = Math.min(state.questionCount, getFilteredVocab().length);
+      render();
+      break;
+    case 'selectAllUnits':
+      state.selectedUnits = state.selectedUnits.length === 7 ? [] : [1,2,3,4,5,6,7];
+      if (state.selectedUnits.length === 0) state.selectedUnits = [1,2,3,4,5,6,7];
+      state.questionCount = Math.min(state.questionCount, getFilteredVocab().length);
+      render();
+      break;
+    case 'startQuiz':
+      startQuiz();
+      break;
+    case 'selectOption':
+      selectOption(el.dataset.word, parseInt(el.dataset.idx));
+      break;
+    case 'nextQuestion':
+      nextQuestion();
+      break;
+    case 'skipQuestion':
+      skipQuestion();
+      break;
+    case 'setResultsTab':
+      state.resultsTab = el.dataset.tab;
+      render();
+      window.scrollTo(0, 0);
+      break;
+    case 'retrySame':
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      state.screen = 'home';
+      render();
+      window.scrollTo(0, 0);
+      setTimeout(startQuiz, 100);
+      break;
+    case 'retryErrors':
+      const errorWords = state.answers.filter(a => a && !a.isCorrect).map(a => {
+        const q = state.quizQuestions.find(qq =>
+          state.answers[state.quizQuestions.indexOf(qq)] === a
+        );
+        return q ? q.vocab.w : null;
+      }).filter(Boolean);
+      if (errorWords.length < 4) {
+        showToast('错题不足4个，无法生成专项测试');
+        return;
+      }
+      const errorVocab = VOCAB.filter(v => errorWords.includes(v.w));
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      state.selectedUnits = [...new Set(errorVocab.map(v => v.u))];
+      state.questionCount = Math.min(errorVocab.length, getFilteredVocab().length);
+      state.screen = 'home';
+      render();
+      window.scrollTo(0, 0);
+      setTimeout(startQuiz, 100);
+      break;
+    case 'goHome':
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      state.screen = 'home';
+      state.showFeedback = false;
+      render();
+      window.scrollTo(0, 0);
+      break;
+    case 'goWordBank':
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      document.getElementById('app').innerHTML = renderWordBank();
+      bindEvents();
+      window.scrollTo(0, 0);
+      break;
+    case 'goErrorReview':
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      document.getElementById('app').innerHTML = renderErrorReview();
+      bindEvents();
+      window.scrollTo(0, 0);
+      break;
+    case 'goStats':
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      document.getElementById('app').innerHTML = renderStats();
+      bindEvents();
+      window.scrollTo(0, 0);
+      break;
+    case 'startErrorQuiz':
+      const stats2 = getErrorStats();
+      const ew2 = Object.entries(stats2).filter(([w,s]) => s.wrong > 0).map(([w]) => w);
+      if (ew2.length < 4) { showToast('错题不足4个'); return; }
+      const ev2 = VOCAB.filter(v => ew2.includes(v.w));
+      if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+      state.selectedUnits = [...new Set(ev2.map(v => v.u))];
+      state.questionCount = Math.min(ev2.length, 20);
+      state.screen = 'home';
+      render();
+      window.scrollTo(0, 0);
+      setTimeout(startQuiz, 100);
+      break;
+    case 'clearErrorStats':
+      if (confirm('确定要清除所有错题记录吗？此操作不可撤销。')) {
+        localStorage.removeItem('vocab_errorStats');
+        showToast('错题记录已清除');
+        document.getElementById('app').innerHTML = renderErrorReview();
+        bindEvents();
+      }
+      break;
+    case 'clearAllData':
+      if (confirm('确定要清除全部学习数据吗？（包括错题记录和测试历史）此操作不可撤销。')) {
+        clearAllData();
+        showToast('全部数据已清除');
+        document.getElementById('app').innerHTML = renderStats();
+        bindEvents();
+      }
+      break;
+    case 'showWordDetail':
+      const w = el.dataset.word;
+      const v = VOCAB.find(vv => vv.w === w);
+      if (v) {
+        const rate = getErrorRate(w);
+        const s2 = getErrorStats()[w];
+        showToast(`${v.w} — ${v.c}  |  错误率: ${s2 ? Math.round(rate*100)+'% ('+s2.wrong+'/'+s2.total+')' : '未测试'}`);
+      }
+      break;
+  }
+}
+
+function handleQCRange(e) {
+  state.questionCount = parseInt(e.target.value);
+  const display = document.getElementById('qcDisplay');
+  if (display) display.textContent = state.questionCount;
+}
+
+let wbSearchTimeout;
+function handleWBSearch(e) {
+  clearTimeout(wbSearchTimeout);
+  wbSearchTimeout = setTimeout(() => {
+    document.getElementById('app').innerHTML = renderWordBank(e.target.value);
+    bindEvents();
+  }, 300);
+}
+
+// ==================== INIT ====================
+render();
+</script>
+</body>
+</html>

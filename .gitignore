@@ -1,0 +1,13 @@
+基础英语-*.pdf
+基础英语-*.docx
+基础英语-*.doc
+*.pdf
+*.docx
+*.doc
+课本pdf/
+*.aux
+*.log
+*.out
+*.toc
+*.tex
+
